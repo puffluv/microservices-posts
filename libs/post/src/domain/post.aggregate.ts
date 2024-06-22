@@ -4,6 +4,7 @@ import { PostServices } from './services';
 import { IsBoolean, IsNotEmpty, IsString, IsUUID, isUUID, validateSync } from 'class-validator';
 import { Exclude } from 'class-transformer';
 import { whitelist } from 'validator';
+import { DomainError } from '@lib/errors';
 
 export class PostAggregate extends PostServices implements IPost {
   @IsUUID()
@@ -40,7 +41,7 @@ export class PostAggregate extends PostServices implements IPost {
     _post.updatedAt = post?.id ? new Date().toISOString() : _post.updatedAt;
     const errors = validateSync(_post, { whitelist: true });
     if (!!errors.length) {
-      throw new Error('Post not valid')
+      throw new DomainError(errors, 'Post not valid');
     }
 
     return _post;
