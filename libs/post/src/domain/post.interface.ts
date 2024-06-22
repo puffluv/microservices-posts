@@ -12,7 +12,7 @@ export interface IPost {
     authorId: string;
   
     /** Опубликован пост или нет */
-    isPublished: boolean;
+    published: boolean;
   
     /** Дата создания */
     createdAt: string;
