@@ -1,9 +1,9 @@
-import { IPost } from "../post.interface";
+import { IPost } from '../post.interface';
 
 export interface ISetPublished {
-    setPublished(): void;
+  setPublished(): void;
 }
 
 export const SET_PUBLISHED = async function (this: IPost) {
-    this.published = true;
-}
+  this.isPublished = true;
+};

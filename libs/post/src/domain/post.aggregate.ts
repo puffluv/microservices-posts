@@ -1,14 +1,14 @@
-import { IPost } from './post.interface';
-import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util'
-import { PostServices } from './services';
-import { IsBoolean, IsNotEmpty, IsString, IsUUID, isUUID, validateSync } from 'class-validator';
-import { Exclude } from 'class-transformer';
-import { whitelist } from 'validator';
 import { DomainError } from '@lib/errors';
+import { Exclude } from 'class-transformer';
+import { IsUUID, validateSync } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
+import { IPost } from './post.interface';
+import { PostServices } from './services';
+import { v4 as uuidv4 } from 'uuid';
 
 export class PostAggregate extends PostServices implements IPost {
   @IsUUID()
-  id: string = randomStringGenerator();
+  id: string = uuidv4();
 
   @IsString()
   @IsNotEmpty()
@@ -24,14 +24,14 @@ export class PostAggregate extends PostServices implements IPost {
 
   @IsBoolean()
   @Exclude()
-  published = false;
+  isPublished = false;
 
   @IsString()
   createdAt = new Date().toISOString();
 
   @IsString()
   updatedAt = new Date().toISOString();
- 
+
   private constructor() {
     super();
   }
@@ -39,12 +39,20 @@ export class PostAggregate extends PostServices implements IPost {
   static create(post: Partial<IPost>) {
     const _post = new PostAggregate();
     Object.assign(_post, post);
+
+    // Generate UUID for id if not provided
+    _post.id = _post.id || uuidv4();
+
+    // Generate UUID for authorId if not provided
+    _post.authorId = _post.authorId || uuidv4();
+
     _post.updatedAt = post?.id ? new Date().toISOString() : _post.updatedAt;
-    const errors = validateSync(_post, { whitelist: true });
-    if (!!errors.length) {
+
+    const errors = validateSync(_post);
+    if (errors.length > 0) {
+      console.error(errors); // Вывод ошибок в консоль для отладки
       throw new DomainError(errors, 'Post not valid');
     }
-
     return _post;
   }
 }
