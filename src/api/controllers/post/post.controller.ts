@@ -26,7 +26,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { PostResponse } from './responses';
+import { PostResponse } from './response';
 
 @ApiTags('Posts')
 // @UseGuards(JwtGuard)
