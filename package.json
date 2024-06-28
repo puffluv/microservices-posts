@@ -27,10 +27,10 @@
     "migration:revert": "npm run typeorm:config migration:revert"
   },
   "dependencies": {
-    "@nestjs/apollo": "^10.0.2",
-    "@nestjs/common": "^10.0.0",
+    "@nestjs/apollo": "^12.1.0",
+    "@nestjs/common": "^10.3.9",
     "@nestjs/config": "^3.2.2",
-    "@nestjs/core": "^10.0.0",
+    "@nestjs/core": "^10.3.9",
     "@nestjs/cqrs": "^10.2.7",
     "@nestjs/graphql": "^12.1.1",
     "@nestjs/jwt": "^10.2.0",
