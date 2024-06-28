@@ -1,9 +1,11 @@
-import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { PostResponse, PaginatedPosts } from '../responses';
 import { PostFacade } from '@lib/post/application-services';
 import { PaginationDto } from '@lib/shared';
 import { plainToInstance } from 'class-transformer';
 import { Public } from '@lib/auth';
+import { v4 as uuidv4 } from 'uuid';
+import { CreatePostInput } from '../inputs';
 
 @Resolver(() => PostResponse)
 export class PostResolver {
@@ -25,5 +27,13 @@ export class PostResolver {
       data,
       total,
     };
+  }
+
+  @Mutation(() => PostResponse)
+  async createPost(@Args('createPostInput') createPostInput: CreatePostInput) {
+    return this.postFacade.commands.createPost({
+      ...createPostInput,
+      authorId: uuidv4(),
+    });
   }
 }
