@@ -36,4 +36,9 @@ export class PostResolver {
       authorId: uuidv4(),
     });
   }
+
+  @Mutation(() => PostResponse)
+  async setPublishedPost(@Args('id') id: string) {
+    return this.postFacade.commands.setPublished(id);
+  }
 }
