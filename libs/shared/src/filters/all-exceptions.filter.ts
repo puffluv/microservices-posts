@@ -1,4 +1,11 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Logger } from '@nestjs/common';
+import {
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  HttpException,
+  HttpStatus,
+  Logger,
+} from '@nestjs/common';
 import { Request } from 'express';
 
 @Catch()
@@ -10,9 +17,16 @@ export class AllExceptionsFilter<T> implements ExceptionFilter {
     const response = ctx.getResponse();
     const request = ctx.getRequest();
 
-    const status = exception instanceof HttpException 
-      ? exception.getStatus() 
-      : HttpStatus.INTERNAL_SERVER_ERROR;
+    const status =
+      exception instanceof HttpException
+        ? exception.getStatus()
+        : HttpStatus.INTERNAL_SERVER_ERROR;
+    if (['graphql', 'rmq'].includes(host.getType())) {
+      throw new HttpException(
+        this._response(status, request, exception),
+        status,
+      );
+    }
     response.status(status).json(this._response(status, request, exception));
   }
 
@@ -26,7 +40,7 @@ export class AllExceptionsFilter<T> implements ExceptionFilter {
       query: request?.query,
       exception: {
         name: exception['name'],
-        message: exception['message']
+        message: exception['message'],
       },
     };
   }
