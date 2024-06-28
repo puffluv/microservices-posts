@@ -2,10 +2,13 @@ import { PostFacade } from '@lib/post/application-services';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseUUIDPipe,
+  Patch,
   Post,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -13,12 +16,12 @@ import { CreatePostDto } from './dto';
 import { CurrentUser, ICurrentUser, Public } from '@lib/auth';
 import { v4 as uuidv4 } from 'uuid';
 import { JwtGuard } from '@lib/auth/guards/jwt.guard';
-import { PaginationDto } from '@lib/shared/dto';
+import { PaginationDto, UpdatePostDto } from '@lib/shared/dto';
 import { plainToInstance } from 'class-transformer';
 import { ReponseWithPagination } from '@lib/shared';
 import { PostAggregate } from '@lib/post';
 
-// @UseGuards(JwtGuard)
+@UseGuards(JwtGuard)
 @Controller('post')
 export class PostController {
   constructor(private readonly postFacade: PostFacade) {}
@@ -30,8 +33,8 @@ export class PostController {
   ) {
     return this.postFacade.commands.createPost({
       ...createPostDto,
-      authorId: uuidv4(),
-      // authorId: user.userId,
+      // authorId: uuidv4(),
+      authorId: user.userId,
     });
   }
 
@@ -54,5 +57,27 @@ export class PostController {
       data,
       total: count,
     };
+  }
+
+  @Put()
+  updatePost(
+    @CurrentUser() user: ICurrentUser,
+    @Body() updatePost: UpdatePostDto,
+  ) {
+    return this.postFacade.commands.updatePost({
+      ...updatePost,
+      // authorId: uuidv4(),
+      authorId: user.userId,
+    });
+  }
+
+  @Patch(`:id`)
+  setPublished(@Param('id', ParseUUIDPipe) id: string) {
+    return this.postFacade.commands.setPublished(id);
+  }
+
+  @Delete(':id')
+  deletePost(@Param('id', ParseUUIDPipe) id: string) {
+    return this.postFacade.commands.deletePost(id);
   }
 }
