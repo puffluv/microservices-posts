@@ -29,7 +29,7 @@ import {
 import { PostResponse } from './response';
 
 @ApiTags('Posts')
-// @UseGuards(JwtGuard)
+@UseGuards(JwtGuard)
 @Controller('post')
 export class PostController {
   constructor(private readonly postFacade: PostFacade) {}
@@ -46,8 +46,8 @@ export class PostController {
   ) {
     return this.postFacade.commands.createPost({
       ...createPostDto,
-      authorId: uuidv4(),
-      // authorId: user.userId,
+      // authorId: uuidv4(),
+      authorId: user.userId,
     });
   }
 
@@ -90,8 +90,8 @@ export class PostController {
   ) {
     return this.postFacade.commands.updatePost({
       ...updatePost,
-      authorId: uuidv4(),
-      // authorId: user.userId,
+      // authorId: uuidv4(),
+      authorId: user.userId,
     });
   }
 

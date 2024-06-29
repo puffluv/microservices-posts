@@ -1,9 +1,9 @@
-import { EXCHANGE_POST } from '@app/amqp-contracts/exchanges';
+import { EXCHANGE_POST } from '@amqp/amqp-contracts/exchanges';
 import {
   AmqpBaseRequest,
   AmqpBaseResponse,
   QueueDeclaration,
-} from '@app/amqp-contracts/shared';
+} from '@amqp/amqp-contracts/shared';
 import { CreatePostRequest, PostResponse } from './interfaces';
 
 export namespace CreatePostContract {
@@ -18,5 +18,5 @@ export namespace CreatePostContract {
 
   export type request = AmqpBaseRequest<CreatePostRequest>;
 
-  export type reponse = AmqpBaseResponse<PostResponse>;
+  export type response = AmqpBaseResponse<PostResponse>;
 }
