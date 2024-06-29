@@ -40,6 +40,7 @@ export class PostResolver {
   ) {
     return this.postFacade.commands.createPost({
       ...createPostInput,
+      // authorId: uuidv4(),
       authorId: currentUser.userId,
     });
   }
@@ -51,6 +52,7 @@ export class PostResolver {
   ) {
     return this.postFacade.commands.updatePost({
       ...updatePostInput,
+      // authorId: uuidv4(),
       authorId: currentUser.userId,
     });
   }
