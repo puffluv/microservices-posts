@@ -24,7 +24,6 @@ export class PostResolver {
   @Query(() => PaginatedPosts, { name: 'posts' })
   async getPosts(@Args() paginationDto: PaginationDto) {
     const pagination = plainToInstance(PaginationDto, paginationDto);
-    // @ts-ignore
     const [data, total] = await this.postFacade.queries.getAllPosts(pagination);
     return {
       ...pagination,
