@@ -1,0 +1,59 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreatePostInput {
+  message: String!
+  title: String!
+}
+
+type Mutation {
+  createPost(createPostInput: CreatePostInput!): PostResponse!
+  deletePost(id: String!): Boolean!
+  setPublishedPost(id: String!): PostResponse!
+  updatePost(updatePostInput: UpdatePostInput!): PostResponse!
+}
+
+type PaginatedPosts {
+  data: [PostResponse!]
+  limit: Int!
+  offset: Int!
+  total: Int!
+}
+
+type PostResponse {
+  """Идентификатор автора сообщения"""
+  authorId: String!
+
+  """Дата создания поста"""
+  createdAt: String!
+
+  """Идентификатор поста"""
+  id: ID!
+
+  """Сообщение поста"""
+  message: String!
+
+  """Заголовок поста"""
+  title: String!
+
+  """Дата обновления поста"""
+  updatedAt: String!
+}
+
+type Query {
+  post(id: String!): PostResponse!
+  posts(
+    """Количество строк"""
+    limit: Int! = 15
+
+    """Пропуск строк"""
+    offset: Int! = 0
+  ): PaginatedPosts!
+}
+
+input UpdatePostInput {
+  id: ID!
+  message: String
+  title: String
+}

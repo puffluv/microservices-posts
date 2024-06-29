@@ -3,7 +3,6 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "deleteOutDir": true,
     "webpack": true
   },
   "projects": {
@@ -23,6 +22,51 @@
       "sourceRoot": "libs/entities/src",
       "compilerOptions": {
         "tsConfigPath": "libs/entities/tsconfig.lib.json"
+      }
+    },
+    "post": {
+      "type": "library",
+      "root": "libs/post",
+      "entryFile": "index",
+      "sourceRoot": "libs/post/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/post/tsconfig.lib.json"
+      }
+    },
+    "errors": {
+      "type": "library",
+      "root": "libs/errors",
+      "entryFile": "index",
+      "sourceRoot": "libs/errors/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/errors/tsconfig.lib.json"
+      }
+    },
+    "shared": {
+      "type": "library",
+      "root": "libs/shared",
+      "entryFile": "index",
+      "sourceRoot": "libs/shared/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/shared/tsconfig.lib.json"
+      }
+    },
+    "auth": {
+      "type": "library",
+      "root": "libs/auth",
+      "entryFile": "index",
+      "sourceRoot": "libs/auth/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/auth/tsconfig.lib.json"
+      }
+    },
+    "amqp-contracts": {
+      "type": "library",
+      "root": "libs/amqp-contracts",
+      "entryFile": "index",
+      "sourceRoot": "libs/amqp-contracts/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/amqp-contracts/tsconfig.lib.json"
       }
     }
   }
