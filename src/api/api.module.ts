@@ -7,3 +7,5 @@ import { ResolversModule } from './resolvers';
   imports: [ControllersModule, AuthModule, ResolversModule],
 })
 export class ApiModule {}
+
+// Graphql - ResolversModule
